@@ -5,6 +5,9 @@ data; a React + Recharts frontend presents it as a dark, SaaS-style dashboard
 (Overview, Sales, Products, Traffic, Orders, Users) with charts, sorting, and
 pagination.
 
+![Uploading Screenshot 2026-07-14 at 7.48.15 PM.png…]()
+
+
 ## Tech stack
 
 - **Backend:** Fastify, Zod (schemas), faker (mock data), pino (logging)
