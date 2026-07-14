@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { z } from 'zod';
 import { mockDataService } from '../services/dataService.js';
 import {
@@ -73,7 +74,8 @@ const PaginatedUsersSchema = z.object({
   pagination: PaginationSchema,
 });
 
-export async function registerRoutes(fastify: FastifyInstance) {
+export async function registerRoutes(instance: FastifyInstance) {
+  const fastify = instance.withTypeProvider<ZodTypeProvider>();
   // Dashboard Overview
   fastify.get('/dashboard', {
     schema: { response: { 200: DashboardResponseSchema } },

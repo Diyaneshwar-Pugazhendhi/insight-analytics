@@ -8,7 +8,7 @@ import {
   YAxis,
 } from 'recharts';
 import type { ChartData } from '@/types';
-import { toRechartsRows, formatCompact, formatCurrency } from '@/lib/format';
+import { toRechartsRows, formatCompact } from '@/lib/format';
 
 function firstColor(c?: string | string[]): string {
   if (Array.isArray(c)) return c[0] ?? '#60a5fa';

@@ -4,7 +4,7 @@ import { getSales } from '@/lib/api';
 import { Card } from '@/components/ui/Card';
 import { PageState } from '@/components/ui/StateView';
 import { AreaChartCard } from '@/components/charts/AreaChartCard';
-import { formatCurrency, formatNumber, formatPercent } from '@/lib/format';
+import { formatCurrency, formatNumber } from '@/lib/format';
 import { cn } from '@/lib/cn';
 
 const PERIODS = ['7d', '30d', '90d', '1y'] as const;

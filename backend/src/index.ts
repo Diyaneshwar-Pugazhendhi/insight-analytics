@@ -1,5 +1,6 @@
 import FastifyNS from 'fastify';
 import type { FastifyInstance } from 'fastify/types/instance.js';
+import type { FastifyBaseLogger, RawServerDefault } from 'fastify';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
@@ -7,7 +8,7 @@ import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import { jsonSchemaTransform } from 'fastify-type-provider-zod';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
-import pino from 'pino';
+import { pino } from 'pino';
 import { env } from './env.js';
 import { registerRoutes } from './routes/index.js';
 import { errorHandler } from './utils/errorHandler.js';
@@ -15,20 +16,18 @@ import { registerApiKeyAuth } from './middleware/apiKeyAuth.js';
 
 const Fastify = (FastifyNS as unknown as { default?: typeof FastifyNS }).default ?? FastifyNS;
 
-const fastifyInstance = Fastify();
-
 const logger = pino({
   level: env.LOG_LEVEL,
   transport:
     env.NODE_ENV !== 'production' && !process.env.NO_PRETTY
       ? { target: 'pino-pretty' }
       : undefined,
-});
+}) as unknown as FastifyBaseLogger;
 
-const fastify = (fastifyInstance as FastifyInstance).withTypeProvider<ZodTypeProvider>({
+const fastify = Fastify({
   logger,
   ajv: { customOptions: { strict: false } },
-});
+}).withTypeProvider<ZodTypeProvider>();
 
 // The fastify-type-provider-zod response serializer builds an ajv schema that
 // fails to compile for our nested response objects. Zod still drives request
